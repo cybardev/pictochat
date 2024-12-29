@@ -1,0 +1,10 @@
+# Render deployment Blueprint
+version: "1"
+services:
+    - name: pictochat
+      type: web
+      plan: free
+      region: ohio
+      runtime: docker
+      domains:
+          - pictochat.cybar.dev
