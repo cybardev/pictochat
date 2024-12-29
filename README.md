@@ -1,4 +1,4 @@
-# Pictochat Online
+# PictoChat
 
 Pictochat for the Nintendo DS & DSi, recreated for browsers!
 
@@ -10,31 +10,30 @@ Pictochat for the Nintendo DS & DSi, recreated for browsers!
 ## Discord commands
 - `!list` / `!l` - Lists online users.
 
+## Usage
+- `[RECOMMENDED]` run your own instance by forking this repo and deploying the [`render.yaml`](./render.yaml) file as a [Render Blueprint](https://render.com/docs/infrastructure-as-code).
+- demo instance: https://pictochat.cybar.dev
+
 ## Self hosting
 You will need:
-- Git
-- Gradle
-- Java 8+ (JDK)
+- Docker
 
-(All of theses steps happens in the terminal/command line)
-1) Clone the repository with the git command (`git clone https://github.com/ayunami2000/ayunpictojava`)
-2) Get in the newly created folder with the cd command (`cd ayunpictojava`)
-3) Make gradlew executable (`chmod +x gradlew`) (Windows: skip this step)
-4) Build the project with gradle (`./gradlew build`) (Windows: `gradlew.bat build`)
-5) Once you see the message "BUILD SUCCESSFUL in []s", a new folder will have been created called `build`
-6) Go into this build folder, then into the libs folder
-7) You will see a file named ayunpictojava-1.0-SNAPSHOT.jar or an equivalent, this is the compiled program!
-8) Copy this file to its' own folder for running, and run it (`java -jar ayunpictojava-1.0-SNAPSHOT.jar`) (or whatever the .jar file is named)
-9) You should see a line in the terminal saying that the server is running on 127.0.0.1:8080, once you see this you can try it out at http://localhost:8080
+Build a Docker image from the [Dockerfile](./Dockerfile) and run the container using the following commands:
+```sh
+docker build . -t cybardev/pictochat:latest
+docker run -d --name pictochat -p 80:8080 cybardev/pictochat:latest
+```
+And navigate to [`http://0.0.0.0:80`](http://0.0.0.0:80) in a browser.
 
-### Changing the port and bind address
-By default, the application will bind to the local address and port 8080. This means that by default it will not be accessible to anyone else on your network.
-To make it accessible, edit the `settings.json` file that is generated after being run at least once, and set host to `0.0.0.0` or `::`. Rerun the program to apply changes.
-You can change the port and other configurable settings as well in a similar manner.
+> [!NOTE]
+> You can change `80` to any other number to run the service on that port.
 
 ### Making tripcodes unique
-To make tripcodes unique and reduce the risk of cracking, in the `settings.json` file, set the `tripcode_secret` to something unique and do not share it.
+To make tripcodes unique and reduce the risk of cracking, in the [`settings.json`](./src/main/resources/settings.json) file, set the `tripcode_secret` to something unique and do not share it.
 
 ### The captcha
-To use the captcha, set the `secret` in the settings.json to your Cloudflare Turnstile captcha secret.
+To use the captcha, set the `secret` in the [`settings.json`](./src/main/resources/settings.json) to your Cloudflare Turnstile captcha secret.
 To disable the captcha entirely, edit the `www/index.html` file and search for `let token = false;` and change it to `let token = true;`. Then, remove or comment out the `<div id="captcha" ...` element and the `<script src="https://challenges.cloudflare.com/ ...` element.
+
+> [!IMPORTANT]
+> Rebuild and rerun container each time you change the [`settings.json`](./src/main/resources/settings.json) file.
