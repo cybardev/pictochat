@@ -1,0 +1,8 @@
+# Compose file for dev testing
+services:
+  pictochat:
+    # Specify the build context for the backend
+    build: ./
+    # Map the host port to the container port
+    ports:
+      - 4000:8080
