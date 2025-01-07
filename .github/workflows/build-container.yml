@@ -3,10 +3,18 @@ name: Build and Publish Container to Registry
 on:
     push:
         branches: [master]
-        paths-ignore: ["**/*.md", "**/.gitignore"]
+        paths-ignore:
+            - "**/*.md"
+            - "**/.gitignore"
+            - "render.yaml"
+            - ".github/workflows/*.yml"
     pull_request:
         branches: [master]
-        paths-ignore: ["**/*.md", "**/.gitignore"]
+        paths-ignore:
+            - "**/*.md"
+            - "**/.gitignore"
+            - "render.yaml"
+            - ".github/workflows/*.yml"
 
     # Allows running this workflow from GitHub Actions tab
     workflow_dispatch:
